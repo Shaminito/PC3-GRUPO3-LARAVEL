@@ -13,4 +13,10 @@ Route::group(['middleware' => ['cors']], function () {
     
     //Webscraping de educatolerancia
     Route::get('webscraping/noticias/educatolerancia', [NoticiasController::class, 'educaToleranciaWebscraping']);
+
+    //Obtener las noticias
+    Route::get('noticias', [NoticiasController::class, 'getNoticias']);
+
+    //Obtener la noticia por id del articulo
+    Route::get('noticias/{id_article}', [NoticiasController::class, 'getNoticiasById']);
 });
