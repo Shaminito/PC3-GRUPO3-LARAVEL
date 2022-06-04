@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticias;
+use App\Models\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class NoticiasController extends Controller
 {
@@ -15,9 +17,10 @@ class NoticiasController extends Controller
         $noticias = json_decode(file_get_contents("./noticias.json"));
 
         foreach ($noticias as $noticia) {
-            $n = new Noticias();
 
-            try {
+            if (!(Noticias::where('id_article', $noticia->id)->first())) {
+                $n = new Noticias();
+                
                 $n->id_article = $noticia->id;
                 $n->titulo = $noticia->titulo;
                 $n->fecha = $noticia->fecha;
@@ -28,7 +31,6 @@ class NoticiasController extends Controller
                 $n->categoria = $noticia->categoria;
                 $n->medio = $noticia->medio;
                 $n->save();
-            } catch (QueryException) {
             }
         }
     }
@@ -42,10 +44,10 @@ class NoticiasController extends Controller
     //Obtener la noticia por id del articulo
     public function getNoticiasById($id_article)
     {
-        $article = json_decode(Noticias::where('id_article', $id_article)->get()->first());
-        
-        exec('python ../webscraping/EducaTolerancia-Webscraping-Articulo.py '.$article->url_articulos);
-        
+        $article = json_decode(Noticias::where('id_article', $id_article)->first());
+
+        exec('python ../webscraping/EducaTolerancia-Webscraping-Articulo.py ' . $article->url_articulos);
+
         $cuerpo = file_get_contents("./cuerpo.txt");
         $cuerpo = substr($cuerpo, 1, -1);
 
@@ -58,5 +60,27 @@ class NoticiasController extends Controller
         $n->cuerpo = $cuerpo;
 
         return response()->json($n);
+    }
+
+    public function register(Request $request)
+    {
+        $user = User::where('email', $request['email'])->first();
+
+        if ($user) {
+            $response['status'] = 0;
+            $response['message'] = 'Email Already Exists';
+            $response['code'] = 409;
+            return response()->json($response);
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+        $response['status'] = 1;
+        $response['message'] = 'User registered successfully';
+        $response['code'] = 200;
+        return response()->json($response);
     }
 }

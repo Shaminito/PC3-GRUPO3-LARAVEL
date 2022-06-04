@@ -79,6 +79,7 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
+        $response['status'] = 1;
         $response['token'] = $token;
         $response['token_type'] = 'bearer';
         $response['expires_in'] = auth()->factory()->getTTL() * 60;

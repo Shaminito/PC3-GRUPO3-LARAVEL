@@ -10,5 +10,5 @@ class Noticias extends Model
     use HasFactory;
     
     protected $table = 'noticias';
-    protected $fillable = ['id_article', 'url_articulos', 'titulo', 'fecha', 'autor', 'descripcion', 'url_foto', 'categoria', 'medio', 'cuerpo'];
+    protected $fillable = ['id_article', 'url_articulos', 'titulo', 'fecha', 'autor', 'descripcion', 'url_foto', 'categoria', 'medio'];
 }
