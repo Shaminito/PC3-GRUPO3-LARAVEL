@@ -67,7 +67,7 @@ def webscraping():
                 {
                     'nombre_colegio': nomColegio,
                     'url': url,
-                    'reseña_media': resMedia,
+                    'opinion_media': resMedia,
                     'comentarios_cant': numComentarios,
                     'direccion': direccion
                 }

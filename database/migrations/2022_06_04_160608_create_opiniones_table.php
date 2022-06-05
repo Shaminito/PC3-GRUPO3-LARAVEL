@@ -13,13 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('colegios', function (Blueprint $table) {
+        Schema::create('opiniones', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_colegio');
-            $table->decimal('opinion_media');
-            $table->string('comentarios_cant');
-            $table->string('direccion');
-            $table->string('url_colegio')->unique();
+            $table->string('usuario');
+            //$table->string('comentario')->unique();
+            $table->decimal('analisis_sent');
+            $table->unsignedBigInteger('id_colegio');
+            $table->foreign('id_colegio')->references('id')->on('colegios');
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colegios');
+        Schema::dropIfExists('opiniones');
     }
 };

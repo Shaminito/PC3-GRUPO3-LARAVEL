@@ -3,6 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+from sentiment_analysis_spanish import sentiment_analysis
+
 import json
 
 import sys
@@ -10,6 +12,14 @@ import sys
 URL = str(sys.argv[1])
 
 listaOpiniones = []
+
+
+def analisis_sentimiento(texto):
+
+    sentiment = sentiment_analysis.SentimentAnalysisSpanish()
+    score = sentiment.sentiment(texto)
+
+    return score
 
 
 def webscraping():
@@ -24,15 +34,21 @@ def webscraping():
     usuarios = driver.find_elements(By.CLASS_NAME, 'd4r55')
     comentarios = driver.find_elements(By.CLASS_NAME, 'wiI7pd')
 
-    for i in range(len(usuarios)):
-        listaOpiniones.append(
-            {
-                'usuario': usuarios[i].text,
-                'comentario': comentarios[i].text
-            }
-        )
+    try:
+        for i in range(5):
+            if comentarios[i].text:
+                listaOpiniones.append(
+                    {
+                        'usuario': usuarios[i].text,
+                        'comentario': comentarios[i].text,
+                        'analisis_sent': analisis_sentimiento(comentarios[i].text)
+                    }
+                )
+    except:
+        pass
 
     with open('opiniones.json', 'w', encoding='utf-8') as f:
         json.dump(listaOpiniones, f, ensure_ascii=False)
+
 
 webscraping()

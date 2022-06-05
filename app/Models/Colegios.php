@@ -10,5 +10,5 @@ class Colegios extends Model
     use HasFactory;
 
     protected $table = 'colegios';
-    protected $fillable = ['nombre_colegio', 'reseña_media', 'comentarios_cant', 'direccion', 'url_colegio'];
+    protected $fillable = ['id', 'nombre_colegio', 'opinion_media', 'comentarios_cant', 'direccion', 'url_colegio'];
 }

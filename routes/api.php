@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ColegiosController;
 use App\Http\Controllers\NoticiasController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,17 +17,20 @@ Route::group(['middleware' => ['cors']], function () {
     //Webscraping de educatolerancia
     Route::get('webscraping/noticias/educatolerancia', [NoticiasController::class, 'educaToleranciaWebscraping']);
 
+    //Webscraping colegio Google Maps
+    Route::post('webscraping/colegios/GM', [ColegiosController::class, 'webscrapingGM']);
+
     //Obtener las noticias
     Route::get('noticias', [NoticiasController::class, 'getNoticias']);
 
     //Obtener la noticia por id del articulo
     Route::get('noticias/{id_article}', [NoticiasController::class, 'getNoticiasById']);
 
-    //Webscraping colegio Google Maps
-    Route::post('webscraping/colegios/GM', [ColegiosController::class, 'webscrapingGM']);
+    //Obtener el colegio y las opiniones
+    Route::get('colegios/{nombre_colegio}', [ColegiosController::class, 'getColegio']);
 
     //Registrar usuario
-    Route::post('register', [NoticiasController::class, 'register']);
+    Route::post('register', [UserController::class, 'register']);
 
     //Grupo de autenticación
     Route::group([
