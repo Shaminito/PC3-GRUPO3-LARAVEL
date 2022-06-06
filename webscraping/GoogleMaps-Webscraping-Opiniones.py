@@ -9,7 +9,9 @@ import json
 
 import sys
 
-URL = str(sys.argv[1])
+colegio = sys.argv[1]
+
+URL = 'https://www.google.es/maps/search/'+colegio
 
 listaOpiniones = []
 
@@ -27,14 +29,14 @@ def webscraping():
     driver.get(URL)
     time.sleep(2)
 
-    # Lista de Usuarios/reseñas
-    driver.find_element(By.CLASS_NAME, 'DkEaL').click()
-    time.sleep(2)
-
-    usuarios = driver.find_elements(By.CLASS_NAME, 'd4r55')
-    comentarios = driver.find_elements(By.CLASS_NAME, 'wiI7pd')
-
     try:
+        # Lista de Usuarios/reseñas
+        driver.find_element(By.CLASS_NAME, 'DkEaL').click()
+        time.sleep(2)
+
+        usuarios = driver.find_elements(By.CLASS_NAME, 'd4r55')
+        comentarios = driver.find_elements(By.CLASS_NAME, 'wiI7pd')
+
         for i in range(5):
             if comentarios[i].text:
                 listaOpiniones.append(

@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Noticias;
-use App\Models\User;
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 
 class NoticiasController extends Controller
 {

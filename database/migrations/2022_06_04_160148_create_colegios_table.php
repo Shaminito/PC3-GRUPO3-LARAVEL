@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('colegios', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_colegio');
+            $table->string('nombre_colegio')->unique();
             $table->decimal('opinion_media');
             $table->string('comentarios_cant');
             $table->string('direccion');
-            $table->string('url_colegio')->unique();
             $table->timestamps();
         });
     }

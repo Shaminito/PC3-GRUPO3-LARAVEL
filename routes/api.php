@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ColegiosController;
+use App\Http\Controllers\LocalidadController;
 use App\Http\Controllers\NoticiasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -27,10 +28,19 @@ Route::group(['middleware' => ['cors']], function () {
     Route::get('noticias/{id_article}', [NoticiasController::class, 'getNoticiasById']);
 
     //Obtener el colegio y las opiniones
-    Route::get('colegios/{nombre_colegio}', [ColegiosController::class, 'getColegio']);
+    Route::get('colegios/{nombre_colegio}', [ColegiosController::class, 'webscrapingGMOpiniones']);
 
     //Registrar usuario
     Route::post('register', [UserController::class, 'register']);
+
+    //Webscraping de MiCole
+    //Webscraping de Ciudades
+    Route::get('webscraping/colegios/MiCole/ciudades', [LocalidadController::class, 'getCiudades']);
+
+    //Webscraping de Provincias
+    Route::get('webscraping/colegios/MiCole/provincias/{ciudad}', [LocalidadController::class, 'getProvincia']);
+
+    Route::post('prueba', [ColegiosController::class, 'prueba']);
 
     //Grupo de autenticación
     Route::group([

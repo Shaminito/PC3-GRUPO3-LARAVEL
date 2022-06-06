@@ -66,7 +66,6 @@ def webscraping():
             listaColegios.append(
                 {
                     'nombre_colegio': nomColegio,
-                    'url': url,
                     'opinion_media': resMedia,
                     'comentarios_cant': numComentarios,
                     'direccion': direccion
